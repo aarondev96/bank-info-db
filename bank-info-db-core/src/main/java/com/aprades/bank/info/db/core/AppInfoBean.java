@@ -19,4 +19,7 @@ public class AppInfoBean {
 	@Value("${server.port:8080}")
 	private Integer port;
 
+	@Value("${info.app.version}")
+	private String version;
+
 }
