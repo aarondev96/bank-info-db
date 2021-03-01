@@ -1,0 +1,3 @@
+Copyright (c) ${year} Aarón Prades Arraya
+
+Author: ${email}
