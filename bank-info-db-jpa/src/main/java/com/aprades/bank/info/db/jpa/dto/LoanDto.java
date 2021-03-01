@@ -5,8 +5,6 @@
  */
 package com.aprades.bank.info.db.jpa.dto;
 
-import com.aprades.bank.info.db.jpa.entity.Account;
-import com.aprades.bank.info.db.jpa.entity.FeeType;
 import lombok.*;
 
 import java.util.Date;
@@ -23,7 +21,7 @@ public class LoanDto {
 	private boolean active;
 	private Date startDate;
 	private String feeType;
-	private Account account;
+	private AccountDto account;
 	private String category;
 	private Integer chargeDay;
 	private String description;

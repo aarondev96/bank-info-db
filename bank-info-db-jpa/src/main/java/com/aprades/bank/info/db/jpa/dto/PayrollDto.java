@@ -5,7 +5,6 @@
  */
 package com.aprades.bank.info.db.jpa.dto;
 
-import com.aprades.bank.info.db.jpa.entity.Account;
 import lombok.*;
 
 import java.util.Date;
@@ -18,7 +17,7 @@ import java.util.Date;
 public class PayrollDto {
 
 	private Long id;
-	private Account account;
+	private AccountDto account;
 	private Double paycheck;
 	private Double extraPayment;
 	private Integer paymentNumber;

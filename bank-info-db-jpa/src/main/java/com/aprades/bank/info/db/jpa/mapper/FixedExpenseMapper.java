@@ -24,10 +24,12 @@ public class FixedExpenseMapper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FixedExpenseMapper.class);
 
+	private final AccountMapper accountMapper;
 	private final FeeTypeRepository feeTypeRepository;
 	private final CategoryTypeRepository categoryTypeRepository;
 
-	public FixedExpenseMapper(FeeTypeRepository feeTypeRepository, CategoryTypeRepository categoryTypeRepository) {
+	public FixedExpenseMapper(AccountMapper accountMapper, FeeTypeRepository feeTypeRepository, CategoryTypeRepository categoryTypeRepository) {
+		this.accountMapper = accountMapper;
 		this.feeTypeRepository = feeTypeRepository;
 		this.categoryTypeRepository = categoryTypeRepository;
 	}
@@ -42,7 +44,7 @@ public class FixedExpenseMapper {
 		FixedExpenseDto fixedExpenseDto = FixedExpenseDto.builder()
 				.id(fixedExpense.getId())
 				.active(fixedExpense.isActive())
-				.account(fixedExpense.getAccount())
+				.account(accountMapper.accountToAccountDto(fixedExpense.getAccount()))
 				.endDate(fixedExpense.getEndDate())
 				.startDate(fixedExpense.getStartDate())
 				.chargeDay(fixedExpense.getChargeDay())
@@ -83,7 +85,7 @@ public class FixedExpenseMapper {
 		FixedExpense fixedExpense = FixedExpense.builder()
 				.id(fixedExpenseDto.getId())
 				.active(fixedExpenseDto.isActive())
-				.account(fixedExpenseDto.getAccount())
+				.account(accountMapper.accountDtoToAccount(fixedExpenseDto.getAccount()))
 				.endDate(fixedExpenseDto.getEndDate())
 				.startDate(fixedExpenseDto.getStartDate())
 				.chargeDay(fixedExpenseDto.getChargeDay())

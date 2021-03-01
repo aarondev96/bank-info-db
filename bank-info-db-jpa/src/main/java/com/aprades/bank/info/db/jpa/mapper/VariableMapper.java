@@ -9,7 +9,6 @@ import com.aprades.bank.info.db.jpa.dto.VariableDto;
 import com.aprades.bank.info.db.jpa.entity.CategoryType;
 import com.aprades.bank.info.db.jpa.entity.Variable;
 import com.aprades.bank.info.db.jpa.repository.CategoryTypeRepository;
-import com.aprades.bank.info.db.jpa.repository.FeeTypeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -23,9 +22,11 @@ public class VariableMapper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(VariableMapper.class);
 
+	private final AccountMapper accountMapper;
 	private final CategoryTypeRepository categoryTypeRepository;
 
-	public VariableMapper(CategoryTypeRepository categoryTypeRepository) {
+	public VariableMapper(AccountMapper accountMapper, CategoryTypeRepository categoryTypeRepository) {
+		this.accountMapper = accountMapper;
 		this.categoryTypeRepository = categoryTypeRepository;
 	}
 
@@ -40,7 +41,7 @@ public class VariableMapper {
 				.id(variable.getId())
 				.date(variable.getDate())
 				.expense(variable.isExpense())
-				.account(variable.getAccount())
+				.account(accountMapper.accountToAccountDto(variable.getAccount()))
 				.quantity(variable.getQuantity())
 				.description(variable.getDescription())
 				.category(variable.getCategoryType().getCategory())
@@ -77,7 +78,7 @@ public class VariableMapper {
 				.id(variableDto.getId())
 				.date(variableDto.getDate())
 				.expense(variableDto.isExpense())
-				.account(variableDto.getAccount())
+				.account(accountMapper.accountDtoToAccount(variableDto.getAccount()))
 				.quantity(variableDto.getQuantity())
 				.description(variableDto.getDescription())
 				.build();

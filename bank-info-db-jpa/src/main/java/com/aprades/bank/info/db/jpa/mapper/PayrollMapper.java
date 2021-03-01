@@ -23,9 +23,11 @@ public class PayrollMapper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PayrollMapper.class);
 
+	private final AccountMapper accountMapper;
 	private final PaymentNumberTypeRepository paymentNumberTypeRepository;
 
-	public PayrollMapper(PaymentNumberTypeRepository paymentNumberTypeRepository) {
+	public PayrollMapper(AccountMapper accountMapper, PaymentNumberTypeRepository paymentNumberTypeRepository) {
+		this.accountMapper = accountMapper;
 		this.paymentNumberTypeRepository = paymentNumberTypeRepository;
 	}
 
@@ -38,7 +40,7 @@ public class PayrollMapper {
 		}
 		PayrollDto payrollDto = PayrollDto.builder()
 				.id(payroll.getId())
-				.account(payroll.getAccount())
+				.account(accountMapper.accountToAccountDto(payroll.getAccount()))
 				.paycheck(payroll.getPaycheck())
 				.extraPayment(payroll.getExtraPayment())
 				.annualGrossSalary(payroll.getAnnualGrossSalary())
@@ -74,7 +76,7 @@ public class PayrollMapper {
 		}
 		Payroll payroll = Payroll.builder()
 				.id(payrollDto.getId())
-				.account(payrollDto.getAccount())
+				.account(accountMapper.accountDtoToAccount(payrollDto.getAccount()))
 				.paycheck(payrollDto.getPaycheck())
 				.extraPayment(payrollDto.getExtraPayment())
 				.annualGrossSalary(payrollDto.getAnnualGrossSalary())

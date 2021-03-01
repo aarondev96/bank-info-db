@@ -7,8 +7,6 @@ package com.aprades.bank.info.db.jpa.dto;
 
 import lombok.*;
 
-import javax.persistence.*;
-
 @Data
 @Builder
 @EqualsAndHashCode

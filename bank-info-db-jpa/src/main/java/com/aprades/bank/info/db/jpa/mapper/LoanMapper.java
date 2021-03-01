@@ -24,10 +24,12 @@ public class LoanMapper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoanMapper.class);
 
+	private final AccountMapper accountMapper;
 	private final FeeTypeRepository feeTypeRepository;
 	private final CategoryTypeRepository categoryTypeRepository;
 
-	public LoanMapper(FeeTypeRepository feeTypeRepository, CategoryTypeRepository categoryTypeRepository) {
+	public LoanMapper(AccountMapper accountMapper, FeeTypeRepository feeTypeRepository, CategoryTypeRepository categoryTypeRepository) {
+		this.accountMapper = accountMapper;
 		this.feeTypeRepository = feeTypeRepository;
 		this.categoryTypeRepository = categoryTypeRepository;
 	}
@@ -43,7 +45,7 @@ public class LoanMapper {
 				.id(loan.getId())
 				.active(loan.isActive())
 				.endDate(loan.getEndDate())
-				.account(loan.getAccount())
+				.account(accountMapper.accountToAccountDto(loan.getAccount()))
 				.chargeDay(loan.getChargeDay())
 				.startDate(loan.getStartDate())
 				.feeType(loan.getFeeType().getType())
@@ -83,7 +85,7 @@ public class LoanMapper {
 				.id(loanDto.getId())
 				.active(loanDto.isActive())
 				.endDate(loanDto.getEndDate())
-				.account(loanDto.getAccount())
+				.account(accountMapper.accountDtoToAccount(loanDto.getAccount()))
 				.chargeDay(loanDto.getChargeDay())
 				.startDate(loanDto.getStartDate())
 				.totalQuantity(loanDto.getTotalQuantity())

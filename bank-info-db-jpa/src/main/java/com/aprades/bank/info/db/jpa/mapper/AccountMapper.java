@@ -19,6 +19,18 @@ public class AccountMapper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AccountMapper.class);
 
+	private final LoanMapper loanMapper;
+	private final PayrollMapper payrollMapper;
+	private final VariableMapper variableMapper;
+	private final FixedExpenseMapper fixedExpenseMapper;
+
+	public AccountMapper(LoanMapper loanMapper, PayrollMapper payrollMapper, VariableMapper variableMapper, FixedExpenseMapper fixedExpenseMapper) {
+		this.loanMapper = loanMapper;
+		this.payrollMapper = payrollMapper;
+		this.variableMapper = variableMapper;
+		this.fixedExpenseMapper = fixedExpenseMapper;
+	}
+
 	public AccountDto accountToAccountDto(Account account) {
 		LOGGER.trace(">> accountToAccountDto() account {}", account);
 
@@ -29,10 +41,10 @@ public class AccountMapper {
 		AccountDto accountDto = AccountDto.builder()
 				.id(account.getId())
 				.balance(account.getBalance())
-				.loanList(account.getLoanList())
-				.payrollList(account.getPayrollList())
-				.variableList(account.getVariableList())
-				.fixedExpenseList(account.getFixedExpenseList())
+				.loanList(loanMapper.loanListToLoanDtoList(account.getLoanList()))
+				.payrollList(payrollMapper.payrollListToPayrollDtoList(account.getPayrollList()))
+				.variableList(variableMapper.variableListToVariableDtoList(account.getVariableList()))
+				.fixedExpenseList(fixedExpenseMapper.fixedExpenseListToFixedExpenseDtoList(account.getFixedExpenseList()))
 				.build();
 
 		LOGGER.trace("<< accountToAccountDto() accountDto {}", accountDto);
@@ -65,10 +77,10 @@ public class AccountMapper {
 		Account account = Account.builder()
 				.id(accountDto.getId())
 				.balance(accountDto.getBalance())
-				.loanList(accountDto.getLoanList())
-				.payrollList(accountDto.getPayrollList())
-				.variableList(accountDto.getVariableList())
-				.fixedExpenseList(accountDto.getFixedExpenseList())
+				.loanList(loanMapper.loanDtoListToLoanList(accountDto.getLoanList()))
+				.payrollList(payrollMapper.payrollDtoListToPayrollList(accountDto.getPayrollList()))
+				.variableList(variableMapper.variableDtoListToVariableList(accountDto.getVariableList()))
+				.fixedExpenseList(fixedExpenseMapper.fixedExpenseDtoListToFixedExpenseList(accountDto.getFixedExpenseList()))
 				.build();
 
 		LOGGER.trace("<< accountDtoToAccount() account {}", account);
