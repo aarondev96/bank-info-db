@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class ApiResponse {
+public class ApiDto {
 
 	private String welcomeMsg;
 
