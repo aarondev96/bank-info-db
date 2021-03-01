@@ -9,6 +9,7 @@ import com.aprades.bank.info.db.jpa.dto.AccountDto;
 import com.aprades.bank.info.db.jpa.entity.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,17 +20,17 @@ public class AccountMapper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AccountMapper.class);
 
-	private final LoanMapper loanMapper;
-	private final PayrollMapper payrollMapper;
-	private final VariableMapper variableMapper;
-	private final FixedExpenseMapper fixedExpenseMapper;
+	@Autowired // autowiring by field due to avoid cyclic dependency (when injecting by constructor)
+	private LoanMapper loanMapper;
 
-	public AccountMapper(LoanMapper loanMapper, PayrollMapper payrollMapper, VariableMapper variableMapper, FixedExpenseMapper fixedExpenseMapper) {
-		this.loanMapper = loanMapper;
-		this.payrollMapper = payrollMapper;
-		this.variableMapper = variableMapper;
-		this.fixedExpenseMapper = fixedExpenseMapper;
-	}
+	@Autowired // autowiring by field due to avoid cyclic dependency (when injecting by constructor)
+	private PayrollMapper payrollMapper;
+
+	@Autowired // autowiring by field due to avoid cyclic dependency (when injecting by constructor)
+	private VariableMapper variableMapper;
+
+	@Autowired // autowiring by field due to avoid cyclic dependency (when injecting by constructor)
+	private FixedExpenseMapper fixedExpenseMapper;
 
 	public AccountDto accountToAccountDto(Account account) {
 		LOGGER.trace(">> accountToAccountDto() account {}", account);

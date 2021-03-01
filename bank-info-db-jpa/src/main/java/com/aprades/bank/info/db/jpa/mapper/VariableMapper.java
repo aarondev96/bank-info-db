@@ -11,6 +11,7 @@ import com.aprades.bank.info.db.jpa.entity.Variable;
 import com.aprades.bank.info.db.jpa.repository.CategoryTypeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -22,11 +23,12 @@ public class VariableMapper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(VariableMapper.class);
 
-	private final AccountMapper accountMapper;
+	@Autowired // autowiring by field due to avoid cyclic dependency (when injecting by constructor)
+	private AccountMapper accountMapper;
+
 	private final CategoryTypeRepository categoryTypeRepository;
 
-	public VariableMapper(AccountMapper accountMapper, CategoryTypeRepository categoryTypeRepository) {
-		this.accountMapper = accountMapper;
+	public VariableMapper(CategoryTypeRepository categoryTypeRepository) {
 		this.categoryTypeRepository = categoryTypeRepository;
 	}
 

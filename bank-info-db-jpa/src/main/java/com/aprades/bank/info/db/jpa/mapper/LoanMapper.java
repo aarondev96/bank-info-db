@@ -13,6 +13,7 @@ import com.aprades.bank.info.db.jpa.repository.CategoryTypeRepository;
 import com.aprades.bank.info.db.jpa.repository.FeeTypeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -24,12 +25,13 @@ public class LoanMapper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoanMapper.class);
 
-	private final AccountMapper accountMapper;
+	@Autowired // autowiring by field due to avoid cyclic dependency (when injecting by constructor)
+	private AccountMapper accountMapper;
+
 	private final FeeTypeRepository feeTypeRepository;
 	private final CategoryTypeRepository categoryTypeRepository;
 
-	public LoanMapper(AccountMapper accountMapper, FeeTypeRepository feeTypeRepository, CategoryTypeRepository categoryTypeRepository) {
-		this.accountMapper = accountMapper;
+	public LoanMapper(FeeTypeRepository feeTypeRepository, CategoryTypeRepository categoryTypeRepository) {
 		this.feeTypeRepository = feeTypeRepository;
 		this.categoryTypeRepository = categoryTypeRepository;
 	}

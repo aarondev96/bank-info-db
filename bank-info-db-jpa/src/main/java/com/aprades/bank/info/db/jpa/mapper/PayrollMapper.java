@@ -12,6 +12,7 @@ import com.aprades.bank.info.db.jpa.entity.Payroll;
 import com.aprades.bank.info.db.jpa.repository.PaymentNumberTypeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -23,11 +24,12 @@ public class PayrollMapper {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PayrollMapper.class);
 
-	private final AccountMapper accountMapper;
+	@Autowired // autowiring by field due to avoid cyclic dependency (when injecting by constructor)
+	private AccountMapper accountMapper;
+
 	private final PaymentNumberTypeRepository paymentNumberTypeRepository;
 
-	public PayrollMapper(AccountMapper accountMapper, PaymentNumberTypeRepository paymentNumberTypeRepository) {
-		this.accountMapper = accountMapper;
+	public PayrollMapper(PaymentNumberTypeRepository paymentNumberTypeRepository) {
 		this.paymentNumberTypeRepository = paymentNumberTypeRepository;
 	}
 
